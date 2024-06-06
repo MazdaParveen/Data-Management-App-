@@ -35,12 +35,12 @@ import { Subscription } from 'rxjs';
   styleUrl: './view-data.component.css'
 })
 export class ViewDataComponent implements OnInit, OnDestroy {
-[x: string]: any;
+  [x: string]: any;
   dataEntries: DataEntry[] = [];
   chartData: { data: number[], label: string }[] = [];
   labels: string[] = [];
   chartOption: ChartOptions = {
-     responsive: true,
+    responsive: true,
     scales: {
       x: {},
       y: {}
@@ -49,9 +49,7 @@ export class ViewDataComponent implements OnInit, OnDestroy {
 
   private dataSubscription!: Subscription;
 
-  constructor(private dataService: DataService) {
-   
-  }
+  constructor(private dataService: DataService) {}
 
   ngOnInit() {
     this.dataSubscription = this.dataService.dataEntries$.subscribe(entries => {
@@ -65,10 +63,20 @@ export class ViewDataComponent implements OnInit, OnDestroy {
   }
 
   updateChartData() {
-    this.chartData = [{
-      data: this.dataEntries.map(entry => entry.temperature),
-      label: 'Temperature (°C)'
-    }];
+    this.chartData = [
+      {
+        data: this.dataEntries.map(entry => entry.temperature),
+        label: 'Temperature (°C)'
+      },
+      {
+        data: this.dataEntries.map(entry => entry.humidity ?? 0),
+        label: 'Humidity (%)'
+      },
+      {
+        data: this.dataEntries.map(entry => entry.pressure ?? 0),
+        label: 'Pressure (hPa)'
+      }
+    ];
     this.labels = this.dataEntries.map(entry => entry.datetime.toISOString());
   }
 }
