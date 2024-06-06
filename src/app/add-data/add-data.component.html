@@ -1,0 +1,47 @@
+<div>
+  <h2>Add Data</h2>
+  <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label for="datetime-input">Date and Time</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="datetime"
+        id="datetime-input"
+        title="Enter date and time"
+        placeholder="Enter date and time"
+        aria-label="Date and Time"
+      >
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="datetime!.hasError('required')">
+        Date and Time is required.
+      </mat-error>
+      <mat-error *ngIf="datetime!.hasError('notPastDate')">
+        Date and Time must be in the past.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label for="temperature-input">Temperature (°C)</mat-label>
+      <input
+        matInput
+        type="number"
+        formControlName="temperature"
+        id="temperature-input"
+        title="Enter temperature"
+        placeholder="Enter temperature"
+        aria-label="Temperature"
+      >
+      <mat-error *ngIf="temperature!.hasError('required')">
+        Temperature is required.
+      </mat-error>
+      <mat-error *ngIf="temperature!.hasError('min')">
+        Temperature must be at least -50°C.
+      </mat-error>
+      <mat-error *ngIf="temperature!.hasError('max')">
+        Temperature must be at most 50°C.
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button type="submit" title="Add Data Button" [disabled]="dataForm.invalid">Add</button>
+  </form>
+</div>

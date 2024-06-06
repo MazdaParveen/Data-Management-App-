@@ -1,0 +1,8 @@
+<div *ngIf="dataEntries.length > 0">
+    <h2>View Data</h2>
+    <div >
+        <canvas baseChart [datasets]="chartData" [labels]="labels" 
+            [type]="'line'">
+        </canvas>
+    </div>
+</div>
